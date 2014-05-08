@@ -1,18 +1,26 @@
-﻿namespace BitFlux.Chromosomes
+﻿namespace BitFlux
 {
     using System;
     using BitFlux.Algorithms;
 
-    public class Chromosome<T, U>
+    public class Chromosome<T, U> : IChromosome<T, U>
+        where U : IComparable<U>
     {
         public Chromosome(int length)
         {
             Length = length;
             Data = new T[length];
             FitnessComputed = false;
+            RankComputed = false;
         }
 
-        public Chromosome(int length, Action<RandomGenerator, Chromosome<T, U>> initializationFunction, RandomGenerator generator)
+        public Chromosome(T[] data)
+            : this(data.Length)
+        {
+            data.CopyTo(Data, 0);
+        }
+
+        public Chromosome(int length, Action<RandomGenerator, IChromosome<T, U>> initializationFunction, RandomGenerator generator)
             : this(length)
         {
             InitializeRandom(initializationFunction, generator);
@@ -22,32 +30,45 @@
 
         public T[] Data { get; private set; }
 
+        public U Fitness { get; private set; }
+
+        public float Rank { get; private set; }
+
         private bool FitnessComputed { get; set; }
 
-        private U FitnessValue { get; set; }
+        private bool RankComputed { get; set; }
 
-        public virtual void InitializeRandom(Action<RandomGenerator, Chromosome<T, U>> initializationFunction, RandomGenerator generator)
+        public virtual void InitializeRandom(Action<RandomGenerator, IChromosome<T, U>> initializationFunction, RandomGenerator generator)
         {
             initializationFunction(generator, this);
         }
 
-        public virtual Tuple<Chromosome<T, U>, Chromosome<T, U>> Crossover(Func<RandomGenerator, Chromosome<T, U>, Chromosome<T, U>, Tuple<Chromosome<T, U>, Chromosome<T, U>>> crossoverFunction, Chromosome<T, U> other, RandomGenerator generator)
+        public virtual Tuple<IChromosome<T, U>, IChromosome<T, U>> Crossover(Func<RandomGenerator, IChromosome<T, U>, IChromosome<T, U>, Tuple<IChromosome<T, U>, IChromosome<T, U>>> crossoverFunction, IChromosome<T, U> other, RandomGenerator generator)
         {
             return crossoverFunction(generator, this, other);
         }
 
-        public virtual void Mutate(Action<RandomGenerator, Chromosome<T, U>> mutationFunction, RandomGenerator generator)
+        public virtual void Mutate(Action<RandomGenerator, IChromosome<T, U>> mutationFunction, RandomGenerator generator)
         {
             mutationFunction(generator, this);
         }
 
-        public virtual U ComputeFitness(Func<Chromosome<T, U>, U> fitnessFunction)
+        public virtual U ComputeFitness(Func<IChromosome<T, U>, U> fitnessFunction)
         {
             if (!FitnessComputed) {
-                FitnessValue = fitnessFunction(this);
+                Fitness = fitnessFunction(this);
             }
 
-            return FitnessValue;
+            return Fitness;
+        }
+
+        public virtual float ComputeRank(Func<IChromosome<T, U>, float> rankingFunction)
+        {
+            if (!RankComputed) {
+                Rank = rankingFunction(this);
+            }
+
+            return Rank;
         }
     }
 }

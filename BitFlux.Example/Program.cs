@@ -5,11 +5,26 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using BitFlux;
+    using BitFlux.Algorithms;
 
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            var someList = Enumerable.Range(1, 10).ToList();
+
+            var settings = new EugenicsLabSettings<Chromosome<int, int>, int, int>()
+                {
+                    ChromosomeLength = 10,
+                    PopulationSize = 30,
+                    Generator = new RandomGenerator(),
+                    InitializationFunction = Initialization<IChromosome<int, int>, int, int>.GetRandomOrderInitializationFunction(someList)
+                };
+
+            var lab = new EugenicsLab<Chromosome<int, int>, int, int>(settings);
+
+            lab.Run();
         }
     }
 }

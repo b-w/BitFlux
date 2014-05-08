@@ -37,8 +37,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\Crossover.cs" />
+    <Compile Include="Algorithms\Initialization.cs" />
+    <Compile Include="Algorithms\Mutation.cs" />
     <Compile Include="Algorithms\RandomGenerator.cs" />
     <Compile Include="Chromosome.cs" />
+    <Compile Include="EugenicsLab.cs" />
+    <Compile Include="EugenicsLabSettings.cs" />
+    <Compile Include="IChromosome.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
