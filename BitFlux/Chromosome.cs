@@ -1,6 +1,7 @@
 ﻿namespace BitFlux
 {
     using System;
+    using System.Linq;
     using BitFlux.Algorithms;
 
     public class Chromosome<T, U> : IChromosome<T, U>
@@ -43,7 +44,7 @@
             initializationFunction(generator, this);
         }
 
-        public virtual Tuple<IChromosome<T, U>, IChromosome<T, U>> Crossover(Func<RandomGenerator, IChromosome<T, U>, IChromosome<T, U>, Tuple<IChromosome<T, U>, IChromosome<T, U>>> crossoverFunction, IChromosome<T, U> other, RandomGenerator generator)
+        public virtual IChromosome<T, U> Crossover(Func<RandomGenerator, IChromosome<T, U>, IChromosome<T, U>, IChromosome<T, U>> crossoverFunction, IChromosome<T, U> other, RandomGenerator generator)
         {
             return crossoverFunction(generator, this, other);
         }
@@ -69,6 +70,20 @@
             }
 
             return Rank;
+        }
+
+        public int CompareTo(IChromosome<T, U> other)
+        {
+            return this.Fitness.CompareTo(other.Fitness);
+        }
+
+        public override string ToString()
+        {
+            return String.Format("[{0}]",
+                String.Join(", ",
+                    Data.Select(x => x.ToString())
+                )
+            );
         }
     }
 }

@@ -18,7 +18,7 @@
             return m_random.Next(0, 2) == 0;
         }
 
-        public virtual bool NextBoolWeighted(float probability)
+        public virtual bool NextBool(float probability)
         {
             if (probability <= 0) {
                 return false;
@@ -32,6 +32,16 @@
         public virtual int NextInt(int min, int max)
         {
             return m_random.Next(min, max);
+        }
+
+        public virtual double NextDouble()
+        {
+            return m_random.NextDouble();
+        }
+
+        public virtual double NextDouble(double min, double max)
+        {
+            return min + (m_random.NextDouble() * (max - min));
         }
 
         public virtual T RandomElementWeighted<T>(IEnumerable<Tuple<T, float>> collection)

@@ -3,7 +3,8 @@
     using System;
     using BitFlux.Algorithms;
 
-    public interface IChromosome<T, U> where U : IComparable<U>
+    public interface IChromosome<T, U> : IComparable<IChromosome<T, U>>
+        where U : IComparable<U>
     {
         int Length { get; }
 
@@ -15,7 +16,7 @@
 
         void InitializeRandom(Action<RandomGenerator, IChromosome<T, U>> initializationFunction, RandomGenerator generator);
 
-        Tuple<IChromosome<T, U>, IChromosome<T, U>> Crossover(Func<RandomGenerator, IChromosome<T, U>, IChromosome<T, U>, Tuple<IChromosome<T, U>, IChromosome<T, U>>> crossoverFunction, IChromosome<T, U> other, RandomGenerator generator);
+        IChromosome<T, U> Crossover(Func<RandomGenerator, IChromosome<T, U>, IChromosome<T, U>, IChromosome<T, U>> crossoverFunction, IChromosome<T, U> other, RandomGenerator generator);
 
         void Mutate(Action<RandomGenerator, IChromosome<T, U>> mutationFunction, RandomGenerator generator);
 

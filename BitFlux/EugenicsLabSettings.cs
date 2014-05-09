@@ -15,16 +15,16 @@
 
         public RandomGenerator Generator { get; set; }
 
-        public Action<RandomGenerator, T> InitializationFunction { get; set; }
+        public Action<RandomGenerator, IChromosome<U, V>> InitializationFunction { get; set; }
 
-        public Func<RandomGenerator, T, T, Tuple<T, T>> CrossoverFunction { get; set; }
+        public Func<RandomGenerator, IChromosome<U, V>, IChromosome<U, V>, IChromosome<U, V>> CrossoverFunction { get; set; }
 
-        public Action<RandomGenerator, T> MutationFunction { get; set; }
+        public Action<RandomGenerator, IChromosome<U, V>> MutationFunction { get; set; }
 
-        public Func<T, V> FitnessFunction { get; set; }
+        public Func<IChromosome<U, V>, V> FitnessFunction { get; set; }
 
-        public Func<T, float> RankingFunction { get; set; }
+        public Func<IChromosome<U, V>, float> RankingFunction { get; set; }
 
-        public Func<ulong, T[], bool> StoppingFunction { get; set; }
+        public Func<ulong, IChromosome<U, V>[], bool> StoppingFunction { get; set; }
     }
 }
