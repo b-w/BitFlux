@@ -6,7 +6,7 @@
 
     public class RandomGenerator
     {
-        private readonly Random _random;
+        protected readonly Random _random;
 
         public RandomGenerator()
         {
