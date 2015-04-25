@@ -2,11 +2,9 @@
 {
     using System;
 
-    public class GenerationInfo<T, U, V>
-        where T : IChromosome<U, V>
-        where V : IComparable<V>
+    public class GenerationInfo<TGene, TFitness> where TFitness : IComparable<TFitness>
     {
-        public GenerationInfo(ulong generation, IChromosome<U, V>[] population)
+        public GenerationInfo(ulong generation, IChromosome<TGene, TFitness>[] population)
         {
             Generation = generation;
             BestFitness = population[0].Fitness;
@@ -16,10 +14,10 @@
 
         public ulong Generation { get; set; }
 
-        public V BestFitness { get; set; }
+        public TFitness BestFitness { get; set; }
 
-        public V WorstFitness { get; set; }
+        public TFitness WorstFitness { get; set; }
 
-        public V MeanFitness { get; set; }
+        public TFitness MeanFitness { get; set; }
     }
 }

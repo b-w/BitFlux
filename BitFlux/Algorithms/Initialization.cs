@@ -3,15 +3,13 @@
     using System;
     using System.Collections.Generic;
 
-    public static class Initialization<T, U, V>
-        where T : IChromosome<U, V>
-        where V : IComparable<V>
+    public static class Initialization<TGene, TFitness> where TFitness : IComparable<TFitness>
     {
-        public static Action<RandomGenerator, IChromosome<U, V>> GetRandomOrderInitializationFunction(List<U> items)
+        public static Action<RandomGenerator, IChromosome<TGene, TFitness>> GetRandomOrderInitializationFunction(List<TGene> items)
         {
             return (rng, c) =>
                 {
-                    var itemsCopy = new List<U>(items);
+                    var itemsCopy = new List<TGene>(items);
                     for (int i = 0; i < c.Length; i++) {
                         var j = rng.NextInt(0, itemsCopy.Count);
                         c.Data[i] = itemsCopy[j];
@@ -20,7 +18,7 @@
                 };
         }
 
-        public static Action<RandomGenerator, IChromosome<bool, V>> GetBooleanInitializationFunction(float probability)
+        public static Action<RandomGenerator, IChromosome<bool, TFitness>> GetBooleanInitializationFunction(float probability)
         {
             return (rng, c) =>
                 {
@@ -30,7 +28,7 @@
                 };
         }
 
-        public static Action<RandomGenerator, IChromosome<int, V>> GetIntegerInitializationFunction(int min, int max)
+        public static Action<RandomGenerator, IChromosome<int, TFitness>> GetIntegerInitializationFunction(int min, int max)
         {
             return (rng, c) =>
                 {
@@ -40,7 +38,7 @@
                 };
         }
 
-        public static Action<RandomGenerator, IChromosome<double, V>> GetDoubleInitializationFunction(double min, double max)
+        public static Action<RandomGenerator, IChromosome<double, TFitness>> GetDoubleInitializationFunction(double min, double max)
         {
             return (rng, c) =>
                 {

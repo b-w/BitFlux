@@ -3,9 +3,7 @@
     using System;
     using BitFlux.Algorithms;
 
-    public class EugenicsLabSettings<T, U, V>
-        where T : IChromosome<U, V>
-        where V : IComparable<V>
+    public class EugenicsLabSettings<TGene, TFitness> where TFitness : IComparable<TFitness>
     {
         public int ChromosomeLength { get; set; }
 
@@ -15,16 +13,16 @@
 
         public RandomGenerator Generator { get; set; }
 
-        public Action<RandomGenerator, IChromosome<U, V>> InitializationFunction { get; set; }
+        public Action<RandomGenerator, IChromosome<TGene, TFitness>> InitializationFunction { get; set; }
 
-        public Func<RandomGenerator, IChromosome<U, V>, IChromosome<U, V>, IChromosome<U, V>> CrossoverFunction { get; set; }
+        public Func<RandomGenerator, IChromosome<TGene, TFitness>, IChromosome<TGene, TFitness>, IChromosome<TGene, TFitness>> CrossoverFunction { get; set; }
 
-        public Action<RandomGenerator, IChromosome<U, V>> MutationFunction { get; set; }
+        public Action<RandomGenerator, IChromosome<TGene, TFitness>> MutationFunction { get; set; }
 
-        public Func<IChromosome<U, V>, V> FitnessFunction { get; set; }
+        public Func<IChromosome<TGene, TFitness>, TFitness> FitnessFunction { get; set; }
 
-        public Func<IChromosome<U, V>, float> RankingFunction { get; set; }
+        public Func<IChromosome<TGene, TFitness>, float> RankingFunction { get; set; }
 
-        public Func<ulong, IChromosome<U, V>[], bool> StoppingFunction { get; set; }
+        public Func<ulong, IChromosome<TGene, TFitness>[], bool> StoppingFunction { get; set; }
     }
 }

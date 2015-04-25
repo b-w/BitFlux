@@ -2,27 +2,24 @@
 {
     using System;
 
-    public static class Mutation<T, U, V>
-        where T : IChromosome<U, V>
-        where V : IComparable<V>
+    public static class Mutation<TGene, TFitness> where TFitness : IComparable<TFitness>
     {
-        public static Action<RandomGenerator, IChromosome<U, V>> GetItemSwapMutationFunction(float probability)
+        public static Action<RandomGenerator, IChromosome<TGene, TFitness>> GetItemSwapMutationFunction(float probability)
         {
             return (rng, c) =>
                 {
                     if (rng.NextBool(probability)) {
                         var i1 = rng.NextInt(0, c.Length);
                         var i2 = rng.NextInt(0, c.Length);
-                        U tmp;
 
-                        tmp = c.Data[i1];
+                        var tmp = c.Data[i1];
                         c.Data[i1] = c.Data[i2];
                         c.Data[i2] = tmp;
                     }
                 };
         }
 
-        public static Action<RandomGenerator, IChromosome<bool, V>> GetBooleanMutationFunction(float probability, int minCount, int maxCount)
+        public static Action<RandomGenerator, IChromosome<bool, TFitness>> GetBooleanMutationFunction(float probability, int minCount, int maxCount)
         {
             return (rng, c) =>
                 {
@@ -36,7 +33,7 @@
                 };
         }
 
-        public static Action<RandomGenerator, IChromosome<int, V>> GetIntegerMutationFunction(float probability, int minCount, int maxCount, int minDelta, int maxDelta)
+        public static Action<RandomGenerator, IChromosome<int, TFitness>> GetIntegerMutationFunction(float probability, int minCount, int maxCount, int minDelta, int maxDelta)
         {
             return (rng, c) =>
                 {
@@ -51,7 +48,7 @@
                 };
         }
 
-        public static Action<RandomGenerator, IChromosome<double, V>> GetDoubleMutationFunction(float probability, int minCount, int maxCount, double minDelta, double maxDelta)
+        public static Action<RandomGenerator, IChromosome<double, TFitness>> GetDoubleMutationFunction(float probability, int minCount, int maxCount, double minDelta, double maxDelta)
         {
             return (rng, c) =>
                 {

@@ -19,7 +19,7 @@
             //
             // goal: find a list of 32 booleans with the most 'true' occurrences
 
-            var settings = new EugenicsLabSettings<Chromosome<bool, int>, bool, int>();
+            var settings = new EugenicsLabSettings<bool, int>();
             settings.ChromosomeLength = 32;
             settings.PopulationSize = 24;
             settings.ElitismCount = 4;
@@ -35,11 +35,11 @@
                     return c.Fitness;
                 };
 
-            settings.InitializationFunction = Initialization<Chromosome<bool, int>, bool, int>.GetBooleanInitializationFunction(0.25f);
+            settings.InitializationFunction = Initialization<bool, int>.GetBooleanInitializationFunction(0.25f);
 
-            settings.CrossoverFunction = Crossover<Chromosome<bool, int>, bool, int>.GetSinglePointCrossoverFunction(0.85f);
+            settings.CrossoverFunction = Crossover<bool, int>.GetSinglePointCrossoverFunction(0.85f);
 
-            settings.MutationFunction = Mutation<Chromosome<bool, int>, bool, int>.GetBooleanMutationFunction(0.65f, 1, 4);
+            settings.MutationFunction = Mutation<bool, int>.GetBooleanMutationFunction(0.65f, 1, 4);
 
             settings.StoppingFunction = (c, gen) =>
                 {
@@ -55,7 +55,7 @@
             var lab = new EugenicsLab<Chromosome<bool, int>, bool, int>(settings);
 
             Console.WriteLine("+---------------------------+");
-            GenerationInfo<Chromosome<bool, int>, bool, int> lastGeneration = null;
+            GenerationInfo<bool, int> lastGeneration = null;
             foreach (var generation in lab.Run()) {
                 lastGeneration = generation;
 
